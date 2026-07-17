@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admission Form | Centre Of Skill Learning</title>
+    <style>
+      :root {
+        --navy: #0e1f3d;
+        --gold: #f5b400;
+        --paper: #fffdf7;
+        --muted: #5b6579;
+        --danger: #c0392b;
+        --success: #1e824c;
+        --border: #b7bfd6;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #e9ecf3;
+        color: var(--navy);
+        padding: clamp(8px, 3vw, 24px) clamp(6px, 2vw, 12px) 60px;
+      }
+      .sheet {
+        max-width: 900px;
+        margin: 0 auto;
+        background: var(--paper);
+        border: 3px solid var(--navy);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(14, 31, 61, 0.18);
+      }
+
+      /* HEADER */
+      .header {
+        display: flex;
+        align-items: stretch;
+        background: var(--gold);
+        flex-wrap: wrap;
+      }
+      .brand {
+        flex: 1.4;
+        min-width: 260px;
+        background: var(--navy);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px clamp(14px, 3vw, 22px);
+        clip-path: polygon(0 0, 100% 0, 92% 100%, 0% 100%);
+      }
+      .owl-icon {
+        width: 52px;
+        height: 52px;
+        flex-shrink: 0;
+      }
+      .brand h1 {
+        margin: 0;
+        font-size: clamp(18px, 3.6vw, 26px);
+        line-height: 1.05;
+        letter-spacing: 0.5px;
+        color: var(--gold);
+      }
+      .brand .eyebrow {
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+      }
+      .brand .tag {
+        font-size: 11px;
+        font-style: italic;
+        color: #dfe4ee;
+        margin-top: 4px;
+      }
+      .title-block {
+        flex: 1;
+        min-width: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 10px;
+      }
+      .title-block h2 {
+        margin: 0;
+        font-size: clamp(20px, 4vw, 30px);
+        letter-spacing: 1px;
+        color: var(--navy);
+        text-align: center;
+      }
+      @media (max-width: 520px) {
+        .brand {
+          clip-path: none;
+        }
+      }
+
+      /* SECTIONS */
+      .section {
+        margin: clamp(10px, 2.5vw, 18px) clamp(10px, 3vw, 20px);
+        border: 2px solid var(--navy);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .section-head {
+        background: var(--navy);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px clamp(10px, 3vw, 16px);
+        font-size: clamp(13.5px, 2.6vw, 16px);
+        font-weight: 700;
+        letter-spacing: 0.4px;
+      }
+      .section-head .icon {
+        background: var(--gold);
+        color: var(--navy);
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 5px;
+      }
+      .section-head .icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      .section-head small {
+        font-weight: 400;
+        color: #d9def0;
+        font-size: 11.5px;
+        margin-left: 4px;
+      }
+      .section-body {
+        padding: clamp(12px, 3vw, 18px) clamp(12px, 3vw, 20px);
+      }
+
+      /* FORM ROWS */
+      .row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+      .field {
+        flex: 1;
+        min-width: 200px;
+      }
+      .field label {
+        display: block;
+        font-weight: 700;
+        font-size: 13.5px;
+        margin-bottom: 6px;
+        color: var(--navy);
+      }
+      .field input[type="text"],
+      .field input[type="email"],
+      .field input[type="date"],
+      .field input[type="tel"],
+      .field select {
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid var(--border);
+        background: transparent;
+        padding: 7px 4px;
+        font-size: 15px;
+        color: var(--navy);
+        outline: none;
+        font-family: inherit;
+      }
+      .field input:focus,
+      .field select:focus {
+        border-bottom: 2px solid var(--gold);
+      }
+      .field small.hint {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 3px;
+      }
+      .field input:invalid:not(:placeholder-shown) {
+        border-bottom-color: var(--danger);
+      }
+
+      .checks {
+        display: flex;
+        gap: 22px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .check-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14.5px;
+        cursor: pointer;
+      }
+      .check-item input {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--navy);
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+
+      /* COURSE + PHOTO layout */
+      .course-flex {
+        display: flex;
+        gap: 26px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+      .course-left {
+        flex: 2;
+        min-width: 240px;
+        order: 1;
+      }
+      .photo-box {
+        width: 150px;
+        text-align: center;
+        flex-shrink: 0;
+        margin: 0 auto;
+        order: 2;
+      }
+      .photo-frame {
+        width: 150px;
+        height: 180px;
+        border: 2px dashed var(--navy);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: #f3f4f8;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .photo-frame:hover {
+        background: #eaf0ff;
+        border-color: var(--gold);
+      }
+      .photo-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      .photo-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 10px;
+        text-align: center;
+        color: var(--muted);
+      }
+      .photo-placeholder svg {
+        width: 44px;
+        height: 44px;
+        color: #c3c9db;
+      }
+      .photo-placeholder span {
+        font-size: 11.5px;
+        font-weight: 700;
+        color: var(--navy);
+        line-height: 1.35;
+      }
+      .photo-placeholder small {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .photo-box small {
+        font-size: 11px;
+        color: var(--muted);
+        display: block;
+        line-height: 1.4;
+      }
+      .photo-box input[type="file"] {
+        margin-top: 6px;
+        font-size: 11px;
+        width: 100%;
+      }
+
+      /* TABLE - Academic Background */
+      .table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      table.academic {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.5px;
+        min-width: auto;
+      }
+      table.academic th {
+        background: var(--navy);
+        color: #fff;
+        padding: 8px 10px;
+        text-align: left;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+      table.academic td {
+        border: 1px solid #ccd2e3;
+        padding: 10px;
+      }
+      table.academic td.qual {
+        font-weight: 700;
+        background: #f5f6fa;
+        white-space: nowrap;
+        width: 220px;
+      }
+      table.academic td.qual .if-app {
+        display: block;
+        font-weight: 400;
+        font-size: 10.5px;
+        color: var(--muted);
+        white-space: normal;
+      }
+      .upload-mini-btn {
+        display: inline-block;
+        background: var(--navy);
+        color: #fff;
+        font-size: 12px;
+        padding: 7px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .upload-mini-btn:hover {
+        background: var(--gold);
+        color: var(--navy);
+      }
+      .doc-preview {
+        margin-top: 8px;
+        font-size: 11.5px;
+        color: var(--success);
+        word-break: break-word;
+      }
+      .doc-preview-card {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 6px;
+      }
+      .doc-preview-card img {
+        width: 52px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid var(--border);
+      }
+      .doc-preview-card .pdf-box {
+        width: 52px;
+        height: 64px;
+        border-radius: 5px;
+        border: 1px solid var(--border);
+        background: #eef0f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+      }
+      .doc-preview-card .fname {
+        font-size: 11px;
+        color: var(--navy);
+        max-width: 160px;
+        word-break: break-word;
+      }
+      .doc-preview-card .uploaded-tag {
+        color: var(--success);
+        font-size: 11px;
+      }
+
+      /* Submit */
+      .submit-wrap {
+        text-align: center;
+        margin: 24px clamp(10px, 3vw, 20px) 30px;
+      }
+      button.submit-btn {
+        background: var(--navy);
+        color: #fff;
+        border: none;
+        padding: 14px 40px;
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        width: 100%;
+        max-width: 340px;
+      }
+      button.submit-btn:hover {
+        background: var(--gold);
+        color: var(--navy);
+      }
+      button.submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      #statusMsg {
+        text-align: center;
+        margin: 0 20px 16px;
+        font-weight: 700;
+        font-size: 14px;
+        display: none;
+        padding: 10px;
+        border-radius: 6px;
+      }
+      #statusMsg.err {
+        display: block;
+        background: #fbeaea;
+        color: var(--danger);
+        border: 1px solid var(--danger);
+      }
+
+      .required {
+        color: var(--danger);
+      }
+
+      /* ===== THANK YOU SCREEN ===== */
+      #thankYouScreen {
+        display: none;
+        padding: 60px 24px;
+        text-align: center;
+      }
+      .check-circle {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: var(--success);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 22px;
+        animation: pulseRing 1.6s infinite;
+      }
+      .check-circle svg {
+        width: 46px;
+        height: 46px;
+      }
+      @keyframes pulseRing {
+        0% {
+          box-shadow: 0 0 0 0 rgba(30, 130, 76, 0.55);
+        }
+        70% {
+          box-shadow: 0 0 0 22px rgba(30, 130, 76, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(30, 130, 76, 0);
+        }
+      }
+      #thankYouScreen h2 {
+        font-size: clamp(22px, 4vw, 28px);
+        margin: 0 0 10px;
+        color: var(--navy);
+      }
+      #thankYouScreen p {
+        font-size: 15px;
+        color: var(--muted);
+        max-width: 420px;
+        margin: 0 auto 26px;
+        line-height: 1.6;
+      }
+      #newFormBtn {
+        background: var(--navy);
+        color: #fff;
+        border: none;
+        padding: 11px 28px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      #newFormBtn:hover {
+        background: var(--gold);
+        color: var(--navy);
+      }
+
+      @media (max-width: 600px) {
+        .row {
+          gap: 14px;
+        }
+        .field {
+          min-width: 100%;
+        }
+        table.academic {
+          font-size: 12.5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sheet" id="sheetWrap">
+      <form id="admissionForm">
+        <!-- HEADER -->
+        <div class="header">
+          <div class="brand">
+            <svg
+              class="owl-icon"
+              viewBox="0 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="#f5b400"
+              stroke-width="2"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+            >
+              <polygon points="32,4 60,15 32,26 4,15" />
+              <line x1="52" y1="18.5" x2="52" y2="30" />
+              <circle cx="20" cy="36" r="10" />
+              <circle cx="44" cy="36" r="10" />
+              <circle cx="20" cy="36" r="2.6" fill="#f5b400" />
+              <circle cx="44" cy="36" r="2.6" fill="#f5b400" />
+              <polygon points="32,40 28.5,46 35.5,46" fill="#f5b400" />
+              <path d="M10,46 Q32,62 54,46 L54,52 Q32,66 10,52 Z" />
+            </svg>
+            <div>
+              <div class="eyebrow">Centre Of</div>
+              <h1>Skill Learning</h1>
+              <div class="tag">"Where Creativity Becomes Reality."</div>
+            </div>
+          </div>
+          <div class="title-block"><h2>ADMISSION FORM</h2></div>
+        </div>
+
+        <!-- 1. COURSE SELECTION -->
+        <div class="section">
+          <div class="section-head">
+            <span class="icon"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              >
+                <path d="M12 3 22 8 12 13 2 8Z" />
+                <path d="M6 10.5V16Q12 19 18 16V10.5" />
+                <line x1="22" y1="8" x2="22" y2="14.5" /></svg
+            ></span>
+            1. COURSE SELECTION
+          </div>
+          <div class="section-body">
+            <div class="course-flex">
+              <div class="course-left">
+                <div class="field" style="margin-bottom: 20px">
+                  <label
+                    >Course Applied For <span class="required">*</span></label
+                  >
+                  <input type="text" name="course_applied" required />
+                </div>
+                <div class="field">
+                  <label
+                    >Mode of Learning <span class="required">*</span></label
+                  >
+                  <div class="checks">
+                    <label class="check-item"
+                      ><input
+                        type="radio"
+                        name="mode_of_learning"
+                        value="Offline"
+                        required
+                      />
+                      Offline</label
+                    >
+                    <label class="check-item"
+                      ><input
+                        type="radio"
+                        name="mode_of_learning"
+                        value="Online"
+                      />
+                      Online</label
+                    >
+                    <label class="check-item"
+                      ><input
+                        type="radio"
+                        name="mode_of_learning"
+                        value="Hybrid"
+                      />
+                      Hybrid</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="photo-box">
+                <div class="photo-frame" id="photoFrame">
+                  <div class="photo-placeholder" id="photoPlaceholder">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.4"
+                    >
+                      <circle cx="12" cy="8" r="4" />
+                      <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+                    </svg>
+                    <label for="photoInput" class="upload-mini-btn"
+                      >Upload Photo</label
+                    >
+                    <small>(3.5 cm x 4.5 cm)</small>
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  id="photoInput"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. STUDENT DETAILS -->
+        <div class="section">
+          <div class="section-head">
+            <span class="icon"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg
+            ></span>
+            2. STUDENT DETAILS <small>(Personal Information)</small>
+          </div>
+          <div class="section-body">
+            <div class="row">
+              <div class="field">
+                <label>Full Name <span class="required">*</span></label>
+                <input
+                  type="text"
+                  name="full_name"
+                  class="text-only"
+                  inputmode="text"
+                  autocomplete="name"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed, numbers nahi"
+                  required
+                  placeholder="e.g. Rahul Sharma"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Date of Birth</label><input type="date" name="dob" />
+              </div>
+              <div class="field">
+                <label>Gender</label>
+                <div class="checks">
+                  <label class="check-item"
+                    ><input type="radio" name="gender" value="Male" />
+                    Male</label
+                  >
+                  <label class="check-item"
+                    ><input type="radio" name="gender" value="Female" />
+                    Female</label
+                  >
+                  <label class="check-item"
+                    ><input type="radio" name="gender" value="Other" />
+                    Other</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Mobile Number <span class="required">*</span></label>
+                <input
+                  type="tel"
+                  name="mobile_number"
+                  class="number-only"
+                  inputmode="numeric"
+                  pattern="[0-9]{10}"
+                  maxlength="10"
+                  title="10 digit mobile number"
+                  placeholder="10-digit mobile"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label>WhatsApp Number</label>
+                <input
+                  type="tel"
+                  name="whatsapp_number"
+                  class="number-only"
+                  inputmode="numeric"
+                  pattern="[0-9]{10}"
+                  maxlength="10"
+                  title="10 digit WhatsApp number"
+                  placeholder="10-digit WhatsApp (if different)"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Email Address</label
+                ><input
+                  type="email"
+                  name="email"
+                  placeholder="name@example.com"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Father's Name</label
+                ><input
+                  type="text"
+                  name="father_name"
+                  class="text-only"
+                  inputmode="text"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed, numbers nahi"
+                />
+              </div>
+              <div class="field">
+                <label>Contact Number</label
+                ><input
+                  type="tel"
+                  name="father_contact"
+                  class="number-only"
+                  inputmode="numeric"
+                  pattern="[0-9]{10}"
+                  maxlength="10"
+                  title="10 digit mobile number"
+                  placeholder="10-digit mobile"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Mother's Name</label
+                ><input
+                  type="text"
+                  name="mother_name"
+                  class="text-only"
+                  inputmode="text"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed, numbers nahi"
+                />
+              </div>
+              <div class="field">
+                <label>Contact Number</label
+                ><input
+                  type="tel"
+                  name="mother_contact"
+                  class="number-only"
+                  inputmode="numeric"
+                  pattern="[0-9]{10}"
+                  maxlength="10"
+                  title="10 digit mobile number"
+                  placeholder="10-digit mobile"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Present Address</label
+                ><input type="text" name="present_address" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>State</label
+                ><input
+                  type="text"
+                  name="present_state"
+                  class="text-only"
+                  inputmode="text"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed"
+                />
+              </div>
+              <div class="field">
+                <label>City</label
+                ><input
+                  type="text"
+                  name="present_city"
+                  class="text-only"
+                  inputmode="text"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed"
+                />
+              </div>
+              <div class="field">
+                <label>Pin Code</label
+                ><input
+                  type="text"
+                  name="present_pincode"
+                  class="number-only"
+                  inputmode="numeric"
+                  pattern="[0-9]{6}"
+                  maxlength="6"
+                  title="6 digit pin code"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>Permanent Address</label
+                ><input type="text" name="permanent_address" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label>State</label
+                ><input
+                  type="text"
+                  name="permanent_state"
+                  class="text-only"
+                  inputmode="text"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed"
+                />
+              </div>
+              <div class="field">
+                <label>City</label
+                ><input
+                  type="text"
+                  name="permanent_city"
+                  class="text-only"
+                  inputmode="text"
+                  pattern="[A-Za-z\s.'-]+"
+                  title="Sirf letters allowed"
+                />
+              </div>
+              <div class="field">
+                <label>Pin Code</label
+                ><input
+                  type="text"
+                  name="permanent_pincode"
+                  class="number-only"
+                  inputmode="numeric"
+                  pattern="[0-9]{6}"
+                  maxlength="6"
+                  title="6 digit pin code"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. ACADEMIC BACKGROUND -->
+        <div class="section">
+          <div class="section-head">
+            <span class="icon"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              >
+                <path d="M12 3 22 8 12 13 2 8Z" />
+                <path d="M6 10.5V16Q12 19 18 16V10.5" />
+                <line x1="22" y1="8" x2="22" y2="14.5" /></svg
+            ></span>
+            3. ACADEMIC BACKGROUND
+          </div>
+          <div class="section-body">
+            <div class="table-scroll">
+              <table class="academic">
+                <thead>
+                  <tr>
+                    <th>Qualification</th>
+                    <th>Upload Document</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="qual">High School (10th)</td>
+                    <td>
+                      <input
+                        type="file"
+                        class="academic-doc-input"
+                        data-row="0"
+                        id="docRow0"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        style="display: none"
+                      />
+                      <label for="docRow0" class="upload-mini-btn"
+                        >Upload Document</label
+                      >
+                      <div class="doc-preview" id="docPreview0"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="qual">
+                      Intermediate (12th)
+                      <span class="if-app">(if applicable)</span>
+                    </td>
+                    <td>
+                      <input
+                        type="file"
+                        class="academic-doc-input"
+                        data-row="1"
+                        id="docRow1"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        style="display: none"
+                      />
+                      <label for="docRow1" class="upload-mini-btn"
+                        >Upload Document</label
+                      >
+                      <div class="doc-preview" id="docPreview1"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="qual">
+                      Graduation <span class="if-app">(if applicable)</span>
+                    </td>
+                    <td>
+                      <input
+                        type="file"
+                        class="academic-doc-input"
+                        data-row="2"
+                        id="docRow2"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        style="display: none"
+                      />
+                      <label for="docRow2" class="upload-mini-btn"
+                        >Upload Document</label
+                      >
+                      <div class="doc-preview" id="docPreview2"></div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="statusMsg"></div>
+        <div class="submit-wrap">
+          <button type="submit" class="submit-btn" id="submitBtn">
+            Submit Admission Form
+          </button>
+        </div>
+      </form>
+
+      <!-- THANK YOU SCREEN -->
+      <div id="thankYouScreen">
+        <div class="check-circle">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#fff"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="4,13 9,18 20,6" />
+          </svg>
+        </div>
+        <h2>Thank You!</h2>
+        <p>
+          Your admission form has been submitted successfully. Our team will
+          contact you soon.
+        </p>
+        <button id="newFormBtn" type="button">Submit Another Response</button>
+      </div>
+    </div>
+
+    <!-- ================= SUPABASE INTEGRATION ================= -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = "https://eunysyamqlhdkqeguyqa.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bnlzeWFtcWxoZGtxZWd1eXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyNjgzNzksImV4cCI6MjA5OTg0NDM3OX0.KkjAdjlQGEF1abpYUw3xOzrbOmpCZbTRfjDKfw4bmQE";
+      const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+      );
+
+      const form = document.getElementById("admissionForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const statusMsg = document.getElementById("statusMsg");
+      const photoInput = document.getElementById("photoInput");
+      const photoFrame = document.getElementById("photoFrame");
+      const thankYouScreen = document.getElementById("thankYouScreen");
+
+      let selectedPhotoFile = null;
+
+      // ---- text-only / number-only strict filtering (blocks keystrokes + cleans paste) ----
+      document.querySelectorAll(".text-only").forEach((el) => {
+        el.addEventListener("keypress", (e) => {
+          if (!/^[A-Za-z\s.'-]$/.test(e.key)) e.preventDefault();
+        });
+        el.addEventListener("input", () => {
+          el.value = el.value.replace(/[^A-Za-z\s.'-]/g, "");
+        });
+        el.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData || window.clipboardData)
+            .getData("text")
+            .replace(/[^A-Za-z\s.'-]/g, "");
+          document.execCommand("insertText", false, text);
+        });
+      });
+
+      document.querySelectorAll(".number-only").forEach((el) => {
+        const isDecimal = el.getAttribute("inputmode") === "decimal";
+        const allowedRegex = isDecimal ? /^[0-9.]$/ : /^[0-9]$/;
+        el.addEventListener("keypress", (e) => {
+          if (!allowedRegex.test(e.key)) e.preventDefault();
+        });
+        el.addEventListener("input", () => {
+          el.value = isDecimal
+            ? el.value.replace(/[^0-9.]/g, "")
+            : el.value.replace(/[^0-9]/g, "");
+        });
+        el.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const raw = (e.clipboardData || window.clipboardData).getData("text");
+          const cleaned = isDecimal
+            ? raw.replace(/[^0-9.]/g, "")
+            : raw.replace(/[^0-9]/g, "");
+          document.execCommand("insertText", false, cleaned);
+        });
+      });
+
+      photoInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        selectedPhotoFile = file;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          photoFrame.innerHTML = `<img src="${ev.target.result}" alt="photo preview" title="Click to change photo" onclick="document.getElementById('photoInput').click()">`;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // ---- Academic Background: per-row document upload (10th / 12th / Graduation) ----
+      const academicDocFiles = {}; // { "0": File, "1": File, "2": File }
+      document.querySelectorAll(".academic-doc-input").forEach((input) => {
+        input.addEventListener("change", (e) => {
+          const row = input.dataset.row;
+          const file = e.target.files[0];
+          const preview = document.getElementById("docPreview" + row);
+          if (!file) {
+            preview.innerHTML = "";
+            delete academicDocFiles[row];
+            return;
+          }
+          academicDocFiles[row] = file;
+
+          if (/\.(jpe?g|png|gif|webp)$/i.test(file.name)) {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              preview.innerHTML = `<div class="doc-preview-card"><img src="${ev.target.result}"><span class="fname"><b class="uploaded-tag">✅ Uploaded</b><br>${file.name}</span></div>`;
+            };
+            reader.readAsDataURL(file);
+          } else {
+            preview.innerHTML = `<div class="doc-preview-card"><div class="pdf-box">📄</div><span class="fname"><b class="uploaded-tag">✅ Uploaded</b><br>${file.name}</span></div>`;
+          }
+        });
+      });
+
+      function showError(text) {
+        statusMsg.textContent = text;
+        statusMsg.className = "err";
+        statusMsg.style.display = "block";
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+        statusMsg.style.display = "none";
+
+        try {
+          const fd = new FormData(form);
+
+          const academic = [
+            { qualification: "High School (10th)" },
+            { qualification: "Intermediate (12th)" },
+            { qualification: "Graduation" },
+          ];
+
+          // Upload each academic row's document (if selected) to student-documents bucket
+          for (const row of Object.keys(academicDocFiles)) {
+            const file = academicDocFiles[row];
+            const ext = file.name.split(".").pop();
+            const fileName = `academic_${row}_${Date.now()}.${ext}`;
+            const { error: docErr } = await supabaseClient.storage
+              .from("student-documents")
+              .upload(fileName, file);
+            if (docErr) throw docErr;
+            const { data: pub } = supabaseClient.storage
+              .from("student-documents")
+              .getPublicUrl(fileName);
+            academic[row].document_name = file.name;
+            academic[row].document_url = pub.publicUrl;
+          }
+
+          // Photo upload
+          let photoUrl = null;
+          if (selectedPhotoFile) {
+            const ext = selectedPhotoFile.name.split(".").pop();
+            const fileName = `photo_${Date.now()}.${ext}`;
+            const { error: uploadErr } = await supabaseClient.storage
+              .from("student-photos")
+              .upload(fileName, selectedPhotoFile);
+            if (uploadErr) throw uploadErr;
+            const { data: pub } = supabaseClient.storage
+              .from("student-photos")
+              .getPublicUrl(fileName);
+            photoUrl = pub.publicUrl;
+          }
+
+          const payload = {
+            course_applied: fd.get("course_applied"),
+            mode_of_learning: fd.get("mode_of_learning"),
+            photo_url: photoUrl,
+            full_name: fd.get("full_name"),
+            dob: fd.get("dob") || null,
+            gender: fd.get("gender"),
+            mobile_number: fd.get("mobile_number"),
+            whatsapp_number: fd.get("whatsapp_number"),
+            email: fd.get("email"),
+            father_name: fd.get("father_name"),
+            father_contact: fd.get("father_contact"),
+            mother_name: fd.get("mother_name"),
+            mother_contact: fd.get("mother_contact"),
+            present_address: fd.get("present_address"),
+            present_state: fd.get("present_state"),
+            present_city: fd.get("present_city"),
+            present_pincode: fd.get("present_pincode"),
+            permanent_address: fd.get("permanent_address"),
+            permanent_state: fd.get("permanent_state"),
+            permanent_city: fd.get("permanent_city"),
+            permanent_pincode: fd.get("permanent_pincode"),
+            academic_background: academic,
+          };
+
+          const { error } = await supabaseClient
+            .from("admissions")
+            .insert([payload]);
+          if (error) throw error;
+
+          // Show thank-you screen
+          form.style.display = "none";
+          thankYouScreen.style.display = "block";
+        } catch (err) {
+          console.error(err);
+          showError("❌ Kuch error aayi: " + err.message);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Submit Admission Form";
+        }
+      });
+
+      document.getElementById("newFormBtn").addEventListener("click", () => {
+        form.reset();
+        photoFrame.innerHTML = `<div class="photo-placeholder" id="photoPlaceholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><label for="photoInput" class="upload-mini-btn">📤 Upload Photo</label><small>(3.5 cm x 4.5 cm)</small></div>`;
+        document
+          .querySelectorAll(".doc-preview")
+          .forEach((p) => (p.innerHTML = ""));
+        selectedPhotoFile = null;
+        Object.keys(academicDocFiles).forEach(
+          (k) => delete academicDocFiles[k],
+        );
+        thankYouScreen.style.display = "none";
+        form.style.display = "block";
+      });
+    </script>
+  </body>
+</html>

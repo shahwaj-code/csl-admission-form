@@ -439,12 +439,35 @@
           Admin Login
         </h1>
         <p>Centre Of Skill Learning — Admissions Panel</p>
-        <label>Email</label>
-        <input type="email" id="loginEmail" placeholder="admin@example.com" />
-        <label>Password</label>
-        <input type="password" id="loginPassword" placeholder="••••••••" />
-        <button id="loginBtn">Login</button>
+        <form id="loginForm">
+          <label>Email</label>
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="admin@example.com"
+            required
+          />
+          <label>Password</label>
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="••••••••"
+            required
+          />
+          <button id="loginBtn" type="submit">Login</button>
+        </form>
         <div id="loginError"></div>
+        <p
+          style="
+            margin-top: 10px;
+            font-size: 12px;
+            color: #5b6579;
+            line-height: 1.5;
+          "
+        >
+          Agar login fail ho raha hai, toh Supabase Dashboard → Authentication →
+          Users mein admin user create/verify karo.
+        </p>
       </div>
     </div>
 
@@ -547,16 +570,25 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-      const SUPABASE_URL = "https://eunysyamqlhdkqeguyqa.supabase.co";
+      const SUPABASE_URL = "https://qjeyqrnolsnaikefcatv.supabase.co";
+
       const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bnlzeWFtcWxoZGtxZWd1eXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyNjgzNzksImV4cCI6MjA5OTg0NDM3OX0.KkjAdjlQGEF1abpYUw3xOzrbOmpCZbTRfjDKfw4bmQE";
-      const supabase = window.supabase.createClient(
+        "sb_publishable_6kqSLvyfZdS970gfty6l2Q_Tnk7n4Z-";
+
+      if (!window.supabase) {
+        document.getElementById("loginError").textContent =
+          "Supabase SDK load nahi ho paaya. Please open this panel through a local server (Live Server / http.server).";
+        document.getElementById("loginError").style.display = "block";
+      }
+
+      const adminSupabase = window.supabase?.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY,
       );
 
       const loginScreen = document.getElementById("loginScreen");
       const dashboard = document.getElementById("dashboard");
+      const loginForm = document.getElementById("loginForm");
       const loginBtn = document.getElementById("loginBtn");
       const loginError = document.getElementById("loginError");
       const logoutBtn = document.getElementById("logoutBtn");
@@ -566,7 +598,7 @@
       async function checkSession() {
         const {
           data: { session },
-        } = await supabase.auth.getSession();
+        } = await adminSupabase.auth.getSession();
         if (session) {
           loginScreen.style.display = "none";
           dashboard.style.display = "block";
@@ -577,31 +609,61 @@
         }
       }
 
-      loginBtn.addEventListener("click", async () => {
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPassword").value;
-        loginError.style.display = "none";
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
+      if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = document.getElementById("loginEmail").value.trim();
+          const password = document.getElementById("loginPassword").value;
+          loginError.style.display = "none";
+          loginBtn.disabled = true;
+          loginBtn.textContent = "Logging in...";
+
+          const { error } = await adminSupabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+
+          if (error) {
+            const msg = (error.message || "").toLowerCase();
+            let friendlyMessage =
+              "Login failed. Supabase mein admin user create/verify karo aur wahi email/password use karo.";
+
+            if (msg.includes("invalid login credentials")) {
+              friendlyMessage =
+                "Email ya password galat hai. Supabase Authentication → Users mein admin user verify karo.";
+            } else if (msg.includes("email not confirmed")) {
+              friendlyMessage =
+                "Admin email confirm karna zaroori hai. Supabase mein email verify karo.";
+            } else if (
+              msg.includes("auth is disabled") ||
+              msg.includes("provider")
+            ) {
+              friendlyMessage =
+                "Supabase project mein Email/Password authentication enable karo. Authentication → Providers mein.";
+            }
+
+            loginError.textContent = friendlyMessage;
+            loginError.style.display = "block";
+            loginBtn.disabled = false;
+            loginBtn.textContent = "Login";
+            return;
+          }
+
+          await checkSession();
+          loginBtn.disabled = false;
+          loginBtn.textContent = "Login";
         });
-        if (error) {
-          loginError.textContent = error.message;
-          loginError.style.display = "block";
-          return;
-        }
-        checkSession();
-      });
+      }
 
       logoutBtn.addEventListener("click", async () => {
-        await supabase.auth.signOut();
+        await adminSupabase.auth.signOut();
         checkSession();
       });
 
       async function loadData() {
         document.getElementById("loadingState").style.display = "block";
         document.getElementById("emptyState").style.display = "none";
-        const { data, error } = await supabase
+        const { data, error } = await adminSupabase
           .from("admissions")
           .select("*")
           .order("created_at", { ascending: false });
@@ -704,7 +766,7 @@
           sel.addEventListener("change", async (e) => {
             const id = e.target.dataset.id;
             const newStatus = e.target.value;
-            const { error } = await supabase
+            const { error } = await adminSupabase
               .from("admissions")
               .update({ status: newStatus })
               .eq("id", id);
@@ -728,7 +790,7 @@
           btn.addEventListener("click", async () => {
             if (!confirm("Ye entry permanently delete karni hai?")) return;
             const id = btn.dataset.id;
-            const { error } = await supabase
+            const { error } = await adminSupabase
               .from("admissions")
               .delete()
               .eq("id", id);

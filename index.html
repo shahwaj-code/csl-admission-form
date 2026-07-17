@@ -986,9 +986,11 @@
     <!-- ================= SUPABASE INTEGRATION ================= -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-      const SUPABASE_URL = "https://eunysyamqlhdkqeguyqa.supabase.co";
+      const SUPABASE_URL = "https://qjeyqrnolsnaikefcatv.supabase.co";
+
       const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1bnlzeWFtcWxoZGtxZWd1eXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQyNjgzNzksImV4cCI6MjA5OTg0NDM3OX0.KkjAdjlQGEF1abpYUw3xOzrbOmpCZbTRfjDKfw4bmQE";
+        "sb_publishable_6kqSLvyfZdS970gfty6l2Q_Tnk7n4Z-";
+
       const supabaseClient = window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY,
@@ -1130,6 +1132,10 @@
             photoUrl = pub.publicUrl;
           }
 
+          const uploadedAcademicDocs = academic.filter(
+            (item) => item.document_url,
+          );
+
           const payload = {
             course_applied: fd.get("course_applied"),
             mode_of_learning: fd.get("mode_of_learning"),
@@ -1153,6 +1159,11 @@
             permanent_city: fd.get("permanent_city"),
             permanent_pincode: fd.get("permanent_pincode"),
             academic_background: academic,
+            documents_submitted: uploadedAcademicDocs,
+            documents_files: uploadedAcademicDocs.map(
+              (item) => item.document_url,
+            ),
+            other_document: null,
           };
 
           const { error } = await supabaseClient

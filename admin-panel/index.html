@@ -576,9 +576,9 @@
         "sb_publishable_6kqSLvyfZdS970gfty6l2Q_Tnk7n4Z-";
 
       if (!window.supabase) {
-        document.getElementById("loginError").textContent =
-          "Supabase SDK load nahi ho paaya. Please open this panel through a local server (Live Server / http.server).";
-        document.getElementById("loginError").style.display = "block";
+        console.warn(
+          "Supabase SDK load nahi ho paaya. Please open this panel through a local server.",
+        );
       }
 
       const adminSupabase = window.supabase?.createClient(
@@ -624,26 +624,7 @@
           });
 
           if (error) {
-            const msg = (error.message || "").toLowerCase();
-            let friendlyMessage =
-              "Login failed. Supabase mein admin user create/verify karo aur wahi email/password use karo.";
-
-            if (msg.includes("invalid login credentials")) {
-              friendlyMessage =
-                "Email ya password galat hai. Supabase Authentication → Users mein admin user verify karo.";
-            } else if (msg.includes("email not confirmed")) {
-              friendlyMessage =
-                "Admin email confirm karna zaroori hai. Supabase mein email verify karo.";
-            } else if (
-              msg.includes("auth is disabled") ||
-              msg.includes("provider")
-            ) {
-              friendlyMessage =
-                "Supabase project mein Email/Password authentication enable karo. Authentication → Providers mein.";
-            }
-
-            loginError.textContent = friendlyMessage;
-            loginError.style.display = "block";
+            console.warn("Admin login failed:", error.message);
             loginBtn.disabled = false;
             loginBtn.textContent = "Login";
             return;
@@ -669,7 +650,7 @@
           .order("created_at", { ascending: false });
         document.getElementById("loadingState").style.display = "none";
         if (error) {
-          alert("Data load karne mein error: " + error.message);
+          console.warn("Data load karne mein error:", error.message);
           return;
         }
         allRows = data || [];

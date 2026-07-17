@@ -189,9 +189,6 @@
         font-size: 11px;
         margin-top: 3px;
       }
-      .field input:invalid:not(:placeholder-shown) {
-        border-bottom-color: var(--danger);
-      }
 
       .checks {
         display: flex;
@@ -414,23 +411,7 @@
       }
 
       #statusMsg {
-        text-align: center;
-        margin: 0 20px 16px;
-        font-weight: 700;
-        font-size: 14px;
-        display: block;
-        padding: 10px;
-        border-radius: 6px;
-        min-height: 44px;
-        line-height: 1.4;
-        background: #fbeaea;
-        color: var(--danger);
-        border: 1px solid var(--danger);
-        visibility: visible;
-        opacity: 1;
-      }
-      #statusMsg.err {
-        display: block;
+        display: none !important;
       }
 
       .required {
@@ -1098,12 +1079,7 @@
       });
 
       function showError(text) {
-        statusMsg.textContent = text;
-        statusMsg.className = "err";
-        statusMsg.style.display = "block";
-        statusMsg.style.visibility = "visible";
-        statusMsg.style.opacity = "1";
-        statusMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+        console.warn(text);
       }
 
       function validateForm() {
@@ -1173,7 +1149,7 @@
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         statusMsg.textContent = "";
-        statusMsg.className = "err";
+        statusMsg.className = "";
 
         if (!validateForm()) {
           return;
